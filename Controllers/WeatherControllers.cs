@@ -1,38 +1,36 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
 using Test.Models;
 using Test.Repositories;
-
-namespace Test.Controllers;
-
+namespace test.Conrollers;
 [ApiController]
-[Route("api/[controller]")]
-public class WeatherController : ControllerBase
+[Route("Controller")]
+public class WeatherContoller : ControllerBase
 {
     private readonly IWeather _repo;
-
-    public WeatherController(IWeather repo)
+    public WeatherContoller(IWeather repo)
     {
         _repo = repo;
     }
 
-    // GET: api/weather
     [HttpGet]
     public IActionResult Get()
     {
-        var data = _repo.GetAll();
-
-        return Ok(data);
+        var Result = _repo.GetAll();
+        return Ok(Result);
     }
 
-    // POST: api/weather
     [HttpPost]
     public IActionResult Add(Weather weather)
     {
-        bool saved = _repo.Add(weather);
-
-        if (saved)
-            return Ok("Data stored successfully");
-
-        return BadRequest("Data not stored");
+        bool data = _repo.Add(weather);
+        if(data)
+        {
+            return Ok("Data Inserted");
+        }
+        else
+        {
+            return BadRequest("Data Not Inserted");
+        }
     }
 }

@@ -7,12 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // SQL Connection
-builder.Services.AddScoped<IDbConnection>(sp =>
-    new SqlConnection(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddScoped<IWeather>(sp =>
+    new WeatherRepository(
+        builder.Configuration .GetConnectionString("DefaultConnection")
+    ));
 // Repository
-builder.Services.AddScoped<IWeather, WeatherRepository>();
 
 var app = builder.Build();
 
