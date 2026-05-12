@@ -1,33 +1,42 @@
-using Microsoft.Data.SqlClient;
-using System.Data;
 using Test.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// SQL Connection
-builder.Services.AddScoped<IWeather>(sp =>
-    new WeatherRepository(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    ));
+// DI
+builder.Services.AddScoped<IWeather, WeatherRepository>();
+
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
         policy => policy.AllowAnyOrigin()
-                      .AllowAnyMethod()
-                      .AllowAnyHeader());
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
 });
 
 var app = builder.Build();
 
-// 🔥 IMPORTANT (THIS WAS MISSING)
-app.UseDefaultFiles();   // loads index.html automatically
-app.UseStaticFiles();    // enables wwwroot
+// Swagger (dev only)
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseCors("AllowAll");
+
+app.UseAuthorization();
 
 app.MapControllers();
 
