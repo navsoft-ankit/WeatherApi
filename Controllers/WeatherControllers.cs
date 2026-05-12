@@ -2,13 +2,13 @@ using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
 using Test.Models;
 using Test.Repositories;
-namespace test.Conrollers;
+namespace Test.Controllers;
 [ApiController]
-[Route("Controller")]
-public class WeatherContoller : ControllerBase
+[Route("api/[Controller]")]
+public class WeatherController : ControllerBase
 {
     private readonly IWeather _repo;
-    public WeatherContoller(IWeather repo)
+    public WeatherController(IWeather repo)
     {
         _repo = repo;
     }
@@ -32,5 +32,15 @@ public class WeatherContoller : ControllerBase
         {
             return BadRequest("Data Not Inserted");
         }
+    }
+    [HttpDelete]
+    public IActionResult Delete(Weather weather)
+    {
+        bool data = _repo.Delete(weather);
+
+        if (data)
+            return Ok("Deleted Successfully");
+
+        return BadRequest("Delete Failed");
     }
 }

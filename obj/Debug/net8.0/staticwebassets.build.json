@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "Tn4U0MxeqheqDtM8AWopZrpbgq+vvHznGcbO+fGCIeM=",
+  "Hash": "mP9sUHEhypYXEKpllYThmIrBMSQilD7BXRMEJUPTYdc=",
   "Source": "test",
   "BasePath": "_content/test",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "test/wwwroot",
+      "Source": "test",
+      "ContentRoot": "/home/nav114/DOTNET PROJECT/test/wwwroot/",
+      "BasePath": "_content/test",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/home/nav114/DOTNET PROJECT/test/wwwroot/index.html",
+      "SourceId": "test",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/nav114/DOTNET PROJECT/test/wwwroot/",
+      "BasePath": "_content/test",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/index.html"
+    }
+  ]
 }

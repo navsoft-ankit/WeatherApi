@@ -82,6 +82,7 @@ using Microsoft.Extensions.Configuration;
 // }
 
 namespace Test.Repositories;
+
 public class WeatherRepository : IWeather
 {
     private readonly string _connectionstring;
@@ -89,11 +90,11 @@ public class WeatherRepository : IWeather
     {
         _connectionstring = Connectionstring;
     }
-    public IEnumerable <Weather> GetAll()
+    public IEnumerable<Weather> GetAll()
     {
         var list = new List<Weather>();
-        using SqlConnection conn  = new SqlConnection(_connectionstring);
-        SqlCommand cmd = new SqlCommand ("GetAllWether",conn);
+        using SqlConnection conn = new SqlConnection(_connectionstring);
+        SqlCommand cmd = new SqlCommand("GetAllWeather", conn);
         cmd.CommandType = CommandType.StoredProcedure;
         conn.Open();
         using SqlDataReader reader = cmd.ExecuteReader();
@@ -108,7 +109,7 @@ public class WeatherRepository : IWeather
         }
         return list;
     }
-//insert data
+    //insert data
     public bool Add(Weather weather)
     {
         using SqlConnection conn = new SqlConnection(_connectionstring);
