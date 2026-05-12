@@ -16,7 +16,7 @@ namespace Test.Controllers
         {
             if(home == null)
             {
-                return BadRequest("Invlaid");
+                return BadRequest("Invalid");
             }
             return Created("api/Home",home);
         }

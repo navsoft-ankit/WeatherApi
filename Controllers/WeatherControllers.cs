@@ -43,4 +43,14 @@ public class WeatherController : ControllerBase
 
         return BadRequest("Delete Failed");
     }
+    [HttpPut]
+    public IActionResult Update(Weather weather)
+    {
+        bool data = _repo.update(weather);
+
+        if (data)
+            return Ok("Updated Successfully");
+
+        return BadRequest("Update Failed");
+    }
 }

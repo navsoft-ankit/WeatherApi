@@ -142,4 +142,21 @@ public class WeatherRepository : IWeather
 
         return rows > 0;
     }
+    public bool update(Weather weather)
+    {
+        using SqlConnection conn = new SqlConnection(_connectionstring);
+
+        SqlCommand cmd = new SqlCommand("UpdateWeather", conn);
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.AddWithValue("@Date", weather.Date);
+        cmd.Parameters.AddWithValue("@Temp", weather.Temp);
+        cmd.Parameters.AddWithValue("@Summary", weather.Summary);
+
+        conn.Open();
+
+        int rows = cmd.ExecuteNonQuery();
+
+        return rows > 0;
+    }
 }

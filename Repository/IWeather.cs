@@ -8,4 +8,6 @@ public interface IWeather
     bool Add(Weather weather);
     bool Delete(Weather weather);
 
+    bool update(Weather weather);
+
 }
