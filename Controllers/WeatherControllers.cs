@@ -47,14 +47,14 @@ public class WeatherController : ControllerBase
         return BadRequest("Delete Failed");
     }
     [HttpPut("{id}")]
-    public IActionResult Update(Weather weather)
+    public IActionResult Update(int Id, Weather weather)
     {
-        var existingWeather = _repo.GetById(weather.Id);
+        var existingWeather = _repo.GetById(Id);
         if (existingWeather == null)
             return NotFound();
-
-        bool data = _repo.update(weather);
-
+        string ab = "Update";
+    
+        bool data = _repo.update(Id, weather, ab);
         if (data)
             return Ok("Updated Successfully");
 

@@ -86,7 +86,7 @@ namespace Test.Repositories;
 public class WeatherRepository : IWeather
 {
     private readonly string _connectionstring;
-      public WeatherRepository(IConfiguration configuration)
+    public WeatherRepository(IConfiguration configuration)
     {
         _connectionstring =
             configuration.GetConnectionString("DefaultConnection");
@@ -131,14 +131,14 @@ public class WeatherRepository : IWeather
 
         return rows > 0;
     }
-    public bool Delete(int Id)
+    public bool Delete(int id)
     {
         using SqlConnection conn = new SqlConnection(_connectionstring);
 
         SqlCommand cmd = new SqlCommand("DeleteWeather", conn);
         cmd.CommandType = CommandType.StoredProcedure;
 
-        cmd.Parameters.AddWithValue("@Id", Id);
+        cmd.Parameters.AddWithValue("@Id", id);
 
         conn.Open();
 
@@ -146,17 +146,16 @@ public class WeatherRepository : IWeather
 
         return rows > 0;
     }
-    public bool update(Weather weather)
+    public bool update(int id, Weather weather, string update, int a)
     {
         using SqlConnection conn = new SqlConnection(_connectionstring);
 
         SqlCommand cmd = new SqlCommand("UpdateWeather", conn);
         cmd.CommandType = CommandType.StoredProcedure;
-        cmd.Parameters.AddWithValue("@Id",weather.Id);
+        cmd.Parameters.AddWithValue("@Id", id);
 
         cmd.Parameters.AddWithValue("@Date", weather.Date);
         cmd.Parameters.AddWithValue("@Temp", weather.Temp);
-
         cmd.Parameters.AddWithValue("@City", weather.City);
         conn.Open();
 
