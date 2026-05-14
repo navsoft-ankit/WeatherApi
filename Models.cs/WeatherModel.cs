@@ -2,8 +2,10 @@ namespace Test.Models
 {
     public class Weather
     {
-        public string Date{get; set;}
-        public double Temp{get; set;}
-        public string Summary{get; set;}
+        public int Id{get; set;}
+        public string City{get; set;}
+        public DateTime Date{get; set;}
+        public float Temp{get; set;}
+    
     }
 }

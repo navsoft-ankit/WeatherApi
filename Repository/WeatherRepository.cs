@@ -86,10 +86,12 @@ namespace Test.Repositories;
 public class WeatherRepository : IWeather
 {
     private readonly string _connectionstring;
-    public WeatherRepository(string Connectionstring)
+      public WeatherRepository(IConfiguration configuration)
     {
-        _connectionstring = Connectionstring;
+        _connectionstring =
+            configuration.GetConnectionString("DefaultConnection");
     }
+
     public IEnumerable<Weather> GetAll()
     {
         var list = new List<Weather>();
@@ -102,9 +104,10 @@ public class WeatherRepository : IWeather
         {
             list.Add(new Weather
             {
-                Date = reader["Date"].ToString(),
-                Temp = Convert.ToDouble(reader["Temp"]),
-                Summary = reader["Summary"].ToString()
+                Id = Convert.ToInt32(reader["Id"]),
+                City = reader["City"].ToString(),
+                Date = Convert.ToDateTime(reader["Date"]),
+                Temp = Convert.ToSingle(reader["Temp"]),
             });
         }
         return list;
@@ -119,7 +122,8 @@ public class WeatherRepository : IWeather
 
         cmd.Parameters.AddWithValue("@Date", weather.Date);
         cmd.Parameters.AddWithValue("@Temp", weather.Temp);
-        cmd.Parameters.AddWithValue("@Summary", weather.Summary);
+
+        cmd.Parameters.AddWithValue("@City", weather.City);
 
         conn.Open();
 
@@ -127,14 +131,14 @@ public class WeatherRepository : IWeather
 
         return rows > 0;
     }
-    public bool Delete(Weather weather)
+    public bool Delete(int Id)
     {
         using SqlConnection conn = new SqlConnection(_connectionstring);
 
         SqlCommand cmd = new SqlCommand("DeleteWeather", conn);
         cmd.CommandType = CommandType.StoredProcedure;
 
-        cmd.Parameters.AddWithValue("@Date", weather.Date);
+        cmd.Parameters.AddWithValue("@Id", Id);
 
         conn.Open();
 
@@ -148,15 +152,31 @@ public class WeatherRepository : IWeather
 
         SqlCommand cmd = new SqlCommand("UpdateWeather", conn);
         cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Id",weather.Id);
 
         cmd.Parameters.AddWithValue("@Date", weather.Date);
         cmd.Parameters.AddWithValue("@Temp", weather.Temp);
-        cmd.Parameters.AddWithValue("@Summary", weather.Summary);
 
+        cmd.Parameters.AddWithValue("@City", weather.City);
         conn.Open();
 
         int rows = cmd.ExecuteNonQuery();
 
         return rows > 0;
+    }
+    public int GetById(int id)
+    {
+        using SqlConnection conn = new SqlConnection(_connectionstring);
+
+        SqlCommand cmd = new SqlCommand("GetWeatherById", conn);
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.AddWithValue("@Id", id);
+
+        conn.Open();
+
+        object result = cmd.ExecuteScalar();
+
+        return result != null ? Convert.ToInt32(result) : -1;
     }
 }

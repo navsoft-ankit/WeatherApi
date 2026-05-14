@@ -33,19 +33,26 @@ public class WeatherController : ControllerBase
             return BadRequest("Data Not Inserted");
         }
     }
-    [HttpDelete]
-    public IActionResult Delete(Weather weather)
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int Id)
     {
-        bool data = _repo.Delete(weather);
-
+        var Weather = _repo.GetById(Id);
+        if (Weather == null)
+            return NotFound();
+        
+        bool data = _repo.Delete(Id);
         if (data)
             return Ok("Deleted Successfully");
 
         return BadRequest("Delete Failed");
     }
-    [HttpPut]
+    [HttpPut("{id}")]
     public IActionResult Update(Weather weather)
     {
+        var existingWeather = _repo.GetById(weather.Id);
+        if (existingWeather == null)
+            return NotFound();
+
         bool data = _repo.update(weather);
 
         if (data)
