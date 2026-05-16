@@ -1,62 +1,90 @@
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
 using Test.Models;
 using Test.Repositories;
+
 namespace Test.Controllers;
+
 [ApiController]
-[Route("api/[Controller]")]
+[Route("api/[controller]")]
 public class WeatherController : ControllerBase
 {
     private readonly IWeather _repo;
+
     public WeatherController(IWeather repo)
     {
         _repo = repo;
     }
 
+    // GET ALL
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-        var Result = _repo.GetAll();
-        return Ok(Result);
+        var result =
+            await _repo.GetAllAsync();
+
+        return Ok(result);
     }
 
+    // INSERT
     [HttpPost]
-    public IActionResult Add(Weather weather)
+    public async Task<IActionResult> Add(
+        Weather weather)
     {
-        bool data = _repo.Add(weather);
-        if(data)
+        bool data =
+            await _repo.AddAsync(weather);
+
+        if (data)
         {
             return Ok("Data Inserted");
         }
-        else
-        {
-            return BadRequest("Data Not Inserted");
-        }
+
+        return BadRequest("Insert Failed");
     }
+
+    // DELETE
     [HttpDelete("{id}")]
-    public IActionResult Delete(int Id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var Weather = _repo.GetById(Id);
-        if (Weather == null)
-            return NotFound();
-        
-        bool data = _repo.Delete(Id);
+        var weather =
+            await _repo.GetByIdAsync(id);
+
+        if (weather == -1)
+        {
+            return NotFound("Data Not Found");
+        }
+
+        bool data =
+            await _repo.DeleteAsync(id);
+
         if (data)
+        {
             return Ok("Deleted Successfully");
+        }
 
         return BadRequest("Delete Failed");
     }
+
+    // UPDATE
     [HttpPut("{id}")]
-    public IActionResult Update(int Id, Weather weather)
+    public async Task<IActionResult> Update(
+        int id,
+        Weather weather)
     {
-        var existingWeather = _repo.GetById(Id);
-        if (existingWeather == null)
-            return NotFound();
-        string ab = "Update";
-    
-        bool data = _repo.update(Id, weather, ab);
+        var existingWeather =
+            await _repo.GetByIdAsync(id);
+
+        if (existingWeather == -1)
+        {
+            return NotFound("Data Not Found");
+        }
+
+        bool data =
+            await _repo.UpdateAsync(id, weather);
+
         if (data)
+        {
             return Ok("Updated Successfully");
+        }
 
         return BadRequest("Update Failed");
     }

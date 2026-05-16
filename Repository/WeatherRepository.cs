@@ -86,96 +86,135 @@ namespace Test.Repositories;
 public class WeatherRepository : IWeather
 {
     private readonly string _connectionstring;
+
     public WeatherRepository(IConfiguration configuration)
     {
         _connectionstring =
             configuration.GetConnectionString("DefaultConnection");
     }
 
-    public IEnumerable<Weather> GetAll()
+    // GET ALL DATA
+    public async Task<IEnumerable<Weather>> GetAllAsync()
     {
         var list = new List<Weather>();
-        using SqlConnection conn = new SqlConnection(_connectionstring);
-        SqlCommand cmd = new SqlCommand("GetAllWeather", conn);
+
+        using SqlConnection conn =
+            new SqlConnection(_connectionstring);
+
+        SqlCommand cmd =
+            new SqlCommand("GetAllWeather", conn);
+
         cmd.CommandType = CommandType.StoredProcedure;
-        conn.Open();
-        using SqlDataReader reader = cmd.ExecuteReader();
-        while (reader.Read())
+
+        await conn.OpenAsync();
+
+        using SqlDataReader reader =
+            await cmd.ExecuteReaderAsync();
+
+        while (await reader.ReadAsync())
         {
             list.Add(new Weather
             {
                 Id = Convert.ToInt32(reader["Id"]),
                 City = reader["City"].ToString(),
                 Date = Convert.ToDateTime(reader["Date"]),
-                Temp = Convert.ToSingle(reader["Temp"]),
+                Temp = Convert.ToSingle(reader["Temp"])
             });
         }
+
         return list;
     }
-    //insert data
-    public bool Add(Weather weather)
-    {
-        using SqlConnection conn = new SqlConnection(_connectionstring);
 
-        SqlCommand cmd = new SqlCommand("InsertWeather", conn);
+    // INSERT DATA
+    public async Task<bool> AddAsync(Weather weather)
+    {
+        using SqlConnection conn =
+            new SqlConnection(_connectionstring);
+
+        SqlCommand cmd =
+            new SqlCommand("InsertWeather", conn);
+
         cmd.CommandType = CommandType.StoredProcedure;
 
+        cmd.Parameters.AddWithValue("@City", weather.City);
         cmd.Parameters.AddWithValue("@Date", weather.Date);
         cmd.Parameters.AddWithValue("@Temp", weather.Temp);
 
+        await conn.OpenAsync();
+
+        int rows =
+            await cmd.ExecuteNonQueryAsync();
+
+        return rows > 0;
+    }
+
+    // DELETE DATA
+    public async Task<bool> DeleteAsync(int id)
+    {
+        using SqlConnection conn =
+            new SqlConnection(_connectionstring);
+
+        SqlCommand cmd =
+            new SqlCommand("DeleteWeather", conn);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.AddWithValue("@Id", id);
+
+        await conn.OpenAsync();
+
+        int rows =
+            await cmd.ExecuteNonQueryAsync();
+
+        return rows > 0;
+    }
+
+    // UPDATE DATA
+    public async Task<bool> UpdateAsync(
+        int id,
+        Weather weather)
+    {
+        using SqlConnection conn =
+            new SqlConnection(_connectionstring);
+
+        SqlCommand cmd =
+            new SqlCommand("UpdateWeather", conn);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.AddWithValue("@Id", id);
         cmd.Parameters.AddWithValue("@City", weather.City);
-
-        conn.Open();
-
-        int rows = cmd.ExecuteNonQuery();
-
-        return rows > 0;
-    }
-    public bool Delete(int id)
-    {
-        using SqlConnection conn = new SqlConnection(_connectionstring);
-
-        SqlCommand cmd = new SqlCommand("DeleteWeather", conn);
-        cmd.CommandType = CommandType.StoredProcedure;
-
-        cmd.Parameters.AddWithValue("@Id", id);
-
-        conn.Open();
-
-        int rows = cmd.ExecuteNonQuery();
-
-        return rows > 0;
-    }
-    public bool update(int id, Weather weather, string update, int a)
-    {
-        using SqlConnection conn = new SqlConnection(_connectionstring);
-
-        SqlCommand cmd = new SqlCommand("UpdateWeather", conn);
-        cmd.CommandType = CommandType.StoredProcedure;
-        cmd.Parameters.AddWithValue("@Id", id);
-
         cmd.Parameters.AddWithValue("@Date", weather.Date);
         cmd.Parameters.AddWithValue("@Temp", weather.Temp);
-        cmd.Parameters.AddWithValue("@City", weather.City);
-        conn.Open();
 
-        int rows = cmd.ExecuteNonQuery();
+        await conn.OpenAsync();
+
+        int rows =
+            await cmd.ExecuteNonQueryAsync();
 
         return rows > 0;
     }
-    public int GetById(int id)
-    {
-        using SqlConnection conn = new SqlConnection(_connectionstring);
 
-        SqlCommand cmd = new SqlCommand("GetWeatherById", conn);
+    // GET BY ID
+    public async Task<int> GetByIdAsync(int id)
+    {
+        using SqlConnection conn =
+            new SqlConnection(_connectionstring);
+
+        SqlCommand cmd =
+            new SqlCommand("GetWeatherById", conn);
+
         cmd.CommandType = CommandType.StoredProcedure;
 
         cmd.Parameters.AddWithValue("@Id", id);
 
-        conn.Open();
+        await conn.OpenAsync();
 
-        object result = cmd.ExecuteScalar();
+        object result =
+            await cmd.ExecuteScalarAsync();
 
-        return result != null ? Convert.ToInt32(result) : -1;
+        return result != null
+            ? Convert.ToInt32(result)
+            : -1;
     }
 }

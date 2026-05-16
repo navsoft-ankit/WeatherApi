@@ -3,7 +3,7 @@ using Test.Models;
 namespace Test.Controllers
 {
     [ApiController]
-    [Route("api/Home")]
+    [Route("api/home")]
     public class HomeController : ControllerBase
     {
         [HttpGet]
@@ -18,7 +18,7 @@ namespace Test.Controllers
             {
                 return BadRequest("Invalid");
             }
-            return Created("api/Home",home);
+            return Created("api/home",home);
         }
     }
 }

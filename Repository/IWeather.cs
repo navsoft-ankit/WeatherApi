@@ -4,10 +4,13 @@ namespace Test.Repositories;
 
 public interface IWeather
 {
-    IEnumerable<Weather> GetAll();
-    int GetById(int id);
-    bool Add(Weather weather);
-    bool Delete(int id);
-    bool update(int id, Weather weather, string update,int a = 0 );
+    Task<IEnumerable<Weather>> GetAllAsync();
 
+    Task<bool> AddAsync(Weather weather);
+
+    Task<bool> DeleteAsync(int id);
+
+    Task<bool> UpdateAsync(int id, Weather weather);
+
+    Task<int> GetByIdAsync(int id);
 }
