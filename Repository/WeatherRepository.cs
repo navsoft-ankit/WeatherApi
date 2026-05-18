@@ -83,6 +83,7 @@ using Microsoft.Extensions.Configuration;
 // }
 
 
+//ADO.NET
 // namespace Test.Repositories;
 
 // public class WeatherRepository : IWeather
@@ -221,10 +222,7 @@ using Microsoft.Extensions.Configuration;
 //     }
 // }
 
-//for dapper
-
-
-
+//for Dapper
 namespace Test.Repositories
 {
     public class WeatherRepository : IWeather
@@ -274,7 +272,8 @@ namespace Test.Repositories
         {
             using var conn = new SqlConnection(_connectionstring);
 
-            var rows = await conn.ExecuteAsync(
+            var rows = await conn.ExecuteAsync
+            (
                 "DeleteWeather",
                 new { Id = id },
                 commandType: CommandType.StoredProcedure
@@ -304,11 +303,12 @@ namespace Test.Repositories
         }
 
         // GET BY ID
-        public async Task<int> GetByIdAsync(int id)
+        public async Task<Weather> GetByIdAsync(int id, Weather weather)
         {
             using var conn = new SqlConnection(_connectionstring);
 
-            return await conn.QueryFirstOrDefaultAsync<int>(
+            return await conn.QueryFirstOrDefaultAsync<Weather>
+            (
                 "GetWeatherById",
                 new { Id = id },
                 commandType: CommandType.StoredProcedure

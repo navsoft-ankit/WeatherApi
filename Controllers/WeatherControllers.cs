@@ -46,9 +46,9 @@ public class WeatherController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         var weather =
-            await _repo.GetByIdAsync(id);
+            await _repo.GetByIdAsync(id, new Weather());
 
-        if (weather == -1)
+        if (weather == null)
         {
             return NotFound("Data Not Found");
         }
@@ -71,9 +71,9 @@ public class WeatherController : ControllerBase
         Weather weather)
     {
         var existingWeather =
-            await _repo.GetByIdAsync(id);
+            await _repo.GetByIdAsync(id, new Weather());
 
-        if (existingWeather == -1)
+        if (existingWeather == null)
         {
             return NotFound("Data Not Found");
         }

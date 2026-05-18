@@ -12,5 +12,5 @@ public interface IWeather
 
     Task<bool> UpdateAsync(int id, Weather weather);
 
-    Task<int> GetByIdAsync(int id);
+    Task<Weather> GetByIdAsync(int id, Weather weather);
 }
