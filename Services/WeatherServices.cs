@@ -12,14 +12,24 @@ namespace Test.Services
             _repo = repo;
         }
 
-        public IEnumerable<Weather> GetForecast()
+        public async Task<IEnumerable<Weather>> GetForecastAsync()
         {
-            return _repo.GetAll();
+            return await _repo.GetAllAsync();
         }
 
-        public void AddWeather(Weather weather)
+        public async Task AddWeatherAsync(Weather weather)
         {
-            _repo.Add(weather);
+            await _repo.AddAsync(weather);
+        }
+
+        public async Task DeleteWeatherAsync(int id)
+        {
+            await _repo.DeleteAsync(id);
+        }
+
+        public async Task UpdateWeatherAsync(int id, Weather weather)
+        {
+            await _repo.UpdateAsync(id, weather);
         }
     }
 }

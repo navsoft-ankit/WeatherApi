@@ -4,7 +4,12 @@ namespace Test.Services
 {
     public interface IWeatherService
     {
-        IEnumerable<Weather> GetForecast();
-        void AddWeather(Weather weather);
+        Task<IEnumerable<Weather>> GetForecastAsync();
+
+        Task AddWeatherAsync(Weather weather);
+
+        Task DeleteWeatherAsync(int id);
+
+        Task UpdateWeatherAsync(int id, Weather weather);
     }
 }
