@@ -41,4 +41,7 @@ app.UseAuthorization();     //user allowed কিনা check করে
 
 app.MapControllers();       //request কে correct controller method এ পাঠায়
 
+app.MapFallbackToFile("index.html"); //যে route গুলো controller এ match করবে না, তাদের জন্য index.html serve করবে
+
 app.Run();                  //সব configuration শেষ, এখন server start করো
+
