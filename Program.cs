@@ -29,15 +29,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection();   //HTTP request কে HTTPS এ convert করে
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseDefaultFiles();      //automatically index.html open করে
 
-app.UseCors("AllowAll");
+app.UseStaticFiles();       //HTML, CSS, JS, image serve করে
 
-app.UseAuthorization();
+app.UseCors("AllowAll");    //frontend (React/Angular) কে API call করার permission দেয়
 
-app.MapControllers();
+app.UseAuthorization();     //user allowed কিনা check করে
 
-app.Run();
+app.MapControllers();       //request কে correct controller method এ পাঠায়
+
+app.Run();                  //সব configuration শেষ, এখন server start করো

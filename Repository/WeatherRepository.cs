@@ -99,7 +99,7 @@ public class WeatherRepository : IWeather
     {
         var list = new List<Weather>();
 
-        using SqlConnection conn =
+        using SqlConnection conn = 
             new SqlConnection(_connectionstring);
 
         SqlCommand cmd =
