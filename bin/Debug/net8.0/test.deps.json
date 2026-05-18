@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "test/1.0.0": {
         "dependencies": {
+          "Dapper": "2.1.79",
           "Microsoft.AspNetCore.OpenApi": "8.0.26",
           "Microsoft.Data.SqlClient": "5.2.1",
           "Swashbuckle.AspNetCore": "6.6.2"
@@ -48,6 +49,14 @@
           "lib/netstandard2.0/Azure.Identity.dll": {
             "assemblyVersion": "1.11.3.0",
             "fileVersion": "1.1100.324.25704"
+          }
+        }
+      },
+      "Dapper/2.1.79": {
+        "runtime": {
+          "lib/net8.0/Dapper.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.79.29349"
           }
         }
       },
@@ -432,6 +441,13 @@
       "sha512": "sha512-4EsGMAr+oog5UqHs46qwA7S/lJiwpXjPBY3t9tQBmJ8nsgmT/LLnrc32eiTlfOdfKxUz4fxBD2YjSnVZacu97w==",
       "path": "azure.identity/1.11.3",
       "hashPath": "azure.identity.1.11.3.nupkg.sha512"
+    },
+    "Dapper/2.1.79": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8YijbzgTfmqmQOnVNorYM6K++pxqnW3nJ4aC1sRHzxUA2CcuoJ9gsTem3kgBnPRMc38zZHl4Esb6hAezXIEEuw==",
+      "path": "dapper/2.1.79",
+      "hashPath": "dapper.2.1.79.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/8.0.26": {
       "type": "package",

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "k7DUjzhOr9I=",
+  "dgSpecHash": "2cNKKSAmrug=",
   "success": true,
   "projectFilePath": "/home/nav114/DOTNET PROJECT/test/test.csproj",
   "expectedPackageFiles": [
     "/home/nav114/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/home/nav114/.nuget/packages/azure.identity/1.11.3/azure.identity.1.11.3.nupkg.sha512",
+    "/home/nav114/.nuget/packages/dapper/2.1.79/dapper.2.1.79.nupkg.sha512",
     "/home/nav114/.nuget/packages/microsoft.aspnetcore.openapi/8.0.26/microsoft.aspnetcore.openapi.8.0.26.nupkg.sha512",
     "/home/nav114/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/home/nav114/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
